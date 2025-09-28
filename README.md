@@ -1,6 +1,8 @@
 # chain-tools
 This repository contains a suite of Python scripts designed to facilitate the rapid generation of customized, high-quality test data on a local Hardhat development network.
+
 🐍 Hardhat Data Generator (Python/Web3)
+
 🚨 Security & Ethical Use Disclaimer
 This repository is strictly intended for ethical security research, vulnerability analysis, and local, controlled testing environments.
 
