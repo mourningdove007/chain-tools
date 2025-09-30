@@ -1,5 +1,5 @@
 # chain-tools
-This repository contains a suite of Python scripts designed to facilitate the rapid generation of customized, high-quality test data on a local Hardhat development network.
+This repository contains a suite of Python scripts designed to facilitate the rapid generation of customized, high-quality test data on a local Anvil development network.
 
 ## Anvil Data Generator (Python/Web3)
 
@@ -12,7 +12,7 @@ We promote responsible disclosure and rigorous security testing within legal and
 
 ## 💡 Overview
 
-This repository contains a suite of Python scripts designed to facilitate the rapid generation of customized, high-quality test data on a local Hardhat development network.
+This repository contains a suite of Python scripts designed to facilitate the rapid generation of customized, high-quality test data on a local Anvil development network.
 
 By leveraging the powerful combination of the web3.py library and eth-account, these tools allow researchers and developers to create complex, repeatable blockchain scenarios necessary for in-depth security analysis and development testing.
 
