@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 from web3 import Web3
 from web3.contract import Contract
 
+from exceptions.blockchain_exception import BlockchainError
+
 load_dotenv(".env")
 
 RPC_URL = os.getenv("RPC_URL")
@@ -20,44 +22,43 @@ ERC20_ABI = json.loads(
 )
 
 
-def setup_web3_connection():
-    print(f"Connecting to RPC URL: {RPC_URL}")
-    w3 = Web3(Web3.HTTPProvider(RPC_URL))
+class PopulateChain:
 
-    if not w3.is_connected():
-        print("Error: Failed to connect to Web3 provider.")
-        return None
+    @staticmethod
+    def setup_web3_connection(rpc_url: str) -> Web3:
+        print(f"Connecting to RPC URL: {rpc_url}")
+        w3 = Web3(Web3.HTTPProvider(rpc_url))
 
-    return w3
+        if not w3.is_connected():
+            print("Error: Failed to connect to Web3 provider.")
+            raise BlockchainError("Failed to connect to Web3 provider.")
 
+        return w3
 
-def get_weth(w3: Web3):
-    print(f"Depositing {100} ETH to get WETH...")
-    weth_contract: Contract = w3.eth.contract(
-        address=w3.to_checksum_address(WETH_SMART_CONTRACT), abi=ERC20_ABI
-    )
-    tx_hash = weth_contract.functions.deposit().transact(
-        {
-            "from": w3.to_checksum_address(ACCOUNT_PUBLIC_KEY),
-            "value": w3.to_wei(100, "ether"),
-        }
-    )
+    @staticmethod
+    def get_weth(
+        amount: int, w3: Web3, weth_smart_contract: str, account_public_key: str
+    ) -> Contract:
+        print(f"Depositing {amount} ETH to get WETH...")
+        weth_contract: Contract = w3.eth.contract(
+            address=w3.to_checksum_address(weth_smart_contract), abi=ERC20_ABI
+        )
+        tx_hash = weth_contract.functions.deposit().transact(
+            {
+                "from": w3.to_checksum_address(account_public_key),
+                "value": w3.to_wei(amount, "ether"),
+            }
+        )
 
-    w3.eth.wait_for_transaction_receipt(tx_hash)
-    print(f"Successfully deposited ETH. Transaction: {w3.to_hex(tx_hash)}")
-
-    weth_balance = weth_contract.functions.balanceOf(
-        w3.to_checksum_address(ACCOUNT_PUBLIC_KEY)
-    ).call()
-    print(
-        f"Anvil funded account WETH balance: {w3.from_wei(weth_balance, 'ether')} WETH"
-    )
+        w3.eth.wait_for_transaction_receipt(tx_hash)
+        print(f"Successfully deposited ETH. Transaction: {w3.to_hex(tx_hash)}")
+        return weth_contract
 
 
 if __name__ == "__main__":
     print(RPC_URL)
 
-    w3 = setup_web3_connection()
+    w3 = PopulateChain.setup_web3_connection(RPC_URL)
 
     if w3:
         chain_id = w3.eth.chain_id
@@ -66,4 +67,4 @@ if __name__ == "__main__":
         print(f"   Chain ID: {chain_id}")
         print(f"   Latest Block: {w3.eth.block_number}")
 
-        get_weth(w3)
+        PopulateChain.get_weth(100, w3, WETH_SMART_CONTRACT, ACCOUNT_PUBLIC_KEY)

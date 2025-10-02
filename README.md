@@ -27,5 +27,11 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+Run the tests with `pytest`:
+
+```
+pytest
+```
+
 The file `.env.example` contains a list of environment variables. 
 Create a `.env` in the root directory and populate the variables accordingly.

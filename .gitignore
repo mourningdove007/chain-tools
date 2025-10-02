@@ -1,4 +1,6 @@
 venv
 .env
 .DS_Store
-populate-scripts/create_test_balances.py
+populate/create_test_balances.py
+.vscode
+.pytest_cache
