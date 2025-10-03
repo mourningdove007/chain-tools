@@ -1,16 +1,8 @@
 import json
-import os
-from dotenv import load_dotenv
 from web3 import Web3
 from web3.contract import Contract
 
 from exceptions.blockchain_exception import BlockchainError
-
-load_dotenv(".env")
-
-RPC_URL = os.getenv("RPC_URL")
-ACCOUNT_PUBLIC_KEY = os.getenv("PREFUNDED_PUBLIC_KEY")
-WETH_SMART_CONTRACT = os.getenv("WETH_SMART_CONTRACT")
 
 ERC20_ABI = json.loads(
     """[
@@ -53,18 +45,3 @@ class PopulateChain:
         w3.eth.wait_for_transaction_receipt(tx_hash)
         print(f"Successfully deposited ETH. Transaction: {w3.to_hex(tx_hash)}")
         return weth_contract
-
-
-if __name__ == "__main__":
-    print(RPC_URL)
-
-    w3 = PopulateChain.setup_web3_connection(RPC_URL)
-
-    if w3:
-        chain_id = w3.eth.chain_id
-
-        print("✅ Connection successful!")
-        print(f"   Chain ID: {chain_id}")
-        print(f"   Latest Block: {w3.eth.block_number}")
-
-        PopulateChain.get_weth(100, w3, WETH_SMART_CONTRACT, ACCOUNT_PUBLIC_KEY)

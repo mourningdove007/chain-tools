@@ -42,7 +42,7 @@ Available Accounts
 We can wrap the tokens of a given test account by running the following command from the root directory:
 
 ```
-python populate/populate_chain.py
+python -m scripts.set_test_account
 ```
 
 A successful wrapping of tokens results in the following message:
