@@ -9,6 +9,10 @@ from exceptions.blockchain_exception import BlockchainError
 
 class PopulateChain:
 
+    def __init__(self, rpc_url: str):
+        self.w3: Web3 = PopulateChain.setup_web3_connection(rpc_url)
+        print(f"Web3 connection established successfully to {rpc_url}.")
+
     @staticmethod
     def setup_web3_connection(rpc_url: str) -> Web3:
         print(f"Connecting to RPC URL: {rpc_url}")
@@ -20,13 +24,11 @@ class PopulateChain:
 
         return w3
 
-    @staticmethod
-    def wrap_ether(
-        amount: int, w3: Web3, weth_smart_contract: str, account_public_key: str
-    ) -> Contract:
+    def wrap_ether(self, amount: int, account_public_key: str) -> Contract:
         print(f"Depositing {amount} ETH to get WETH...")
+        w3 = self.w3
         weth_contract: Contract = w3.eth.contract(
-            address=w3.to_checksum_address(weth_smart_contract), abi=ba.ERC20_ABI
+            address=w3.to_checksum_address(ba.WETH_CONTRACT), abi=ba.ERC20_ABI
         )
         tx_hash = weth_contract.functions.deposit().transact(
             {
@@ -40,19 +42,19 @@ class PopulateChain:
         return weth_contract
 
     def fund_dai_account(
+        self,
         amount: Union[int, float],
-        w3: Web3,
-        whale_address: str,
         test_account_address: str,
     ):
 
+        w3 = self.w3
         amount_wei = w3.to_wei(amount, "ether")
 
-        print(f"\n🐋 Impersonating DAI Whale: {whale_address}")
+        print(f"\nImpersonating DAI 🐋: {ba.DAI_WHALE}")
         try:
             w3.provider.make_request(
                 method="hardhat_impersonateAccount",
-                params=[w3.to_checksum_address(whale_address)],
+                params=[w3.to_checksum_address(ba.DAI_WHALE)],
             )
             dai_contract: Contract = w3.eth.contract(
                 address=w3.to_checksum_address(ba.DAI_CONTRACT), abi=ba.ERC20_ABI
@@ -63,7 +65,7 @@ class PopulateChain:
             )
             return
 
-        print(f"💰 Transferring {amount} DAI (Wei amount: {amount_wei})...")
+        print(f"Transferring {amount} DAI ...")
 
         initial_dai_wei = dai_contract.functions.balanceOf(
             w3.to_checksum_address(test_account_address)
@@ -76,7 +78,7 @@ class PopulateChain:
             w3.to_checksum_address(test_account_address), amount_wei
         ).transact(
             {
-                "from": w3.to_checksum_address(whale_address),
+                "from": w3.to_checksum_address(ba.DAI_WHALE),
             }
         )
 
@@ -96,15 +98,15 @@ class PopulateChain:
                 f"Transfer failed verification. Expected {w3.from_wei(target_wei, 'ether')}, got {final_balance_dai}"
             )
 
-    @staticmethod
-    def fund_whale_for_testing(amount_eth: float, w3: Web3, whale_address: str):
+    def fund_whale_for_testing(self, amount_eth: float):
 
-        dest_checksum = w3.to_checksum_address(whale_address)
+        w3 = self.w3
+        dest_checksum = w3.to_checksum_address(ba.DAI_WHALE)
         amount_wei = w3.to_wei(amount_eth, "ether")
 
         print("-" * 50)
         print(
-            f"Attempting to fund whale {whale_address[:8]}... with {amount_eth:.4f} ETH."
+            f"Attempting to fund whale {ba.DAI_WHALE[:8]}... with {amount_eth:.4f} ETH."
         )
 
         initial_wei = w3.eth.get_balance(dest_checksum)
@@ -139,13 +141,11 @@ class PopulateChain:
         print("-" * 50)
 
     def fund_account_with_dai_and_weth(
-        rpc_url: str,
-        weth_smart_contract: str,
-        whale_address: str,
+        self,
         test_account_address: str,
     ):
 
-        w3 = PopulateChain.setup_web3_connection(rpc_url)
+        w3 = self.w3
 
         if w3:
             chain_id = w3.eth.chain_id
@@ -154,8 +154,6 @@ class PopulateChain:
             print(f"   Chain ID: {chain_id}")
             print(f"   Latest Block: {w3.eth.block_number}")
 
-            PopulateChain.wrap_ether(100, w3, weth_smart_contract, test_account_address)
-            PopulateChain.fund_whale_for_testing(10, w3, whale_address)
-            PopulateChain.fund_dai_account(
-                10000, w3, whale_address, test_account_address
-            )
+            self.wrap_ether(100, test_account_address)
+            self.fund_whale_for_testing(101)
+            self.fund_dai_account(102, test_account_address)
