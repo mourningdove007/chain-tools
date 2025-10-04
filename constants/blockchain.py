@@ -3,13 +3,13 @@ import json
 
 class BlockchainAddresses:
 
-    ## DAI smartk contract can be found on etherscan
+    ## DAI smart contract can be found on etherscan
     ## https://etherscan.io/token/0x6b175474e89094c44da98b954eedeac495271d0f
-    DAI_CONTRACT: str = "0x6B175474E89094C44Da98b954EedeAC495271d0F"
+    DAI_CONTRACT: str = "0x6b175474e89094c44da98b954eedeac495271d0f"
 
-    ## WETH Smart Contract can be found on etherscan
+    ## WETH smart contract can be found on etherscan
     ## https://etherscan.io/token/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
-    WETH_CONTRACT: str = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+    WETH_CONTRACT: str = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
 
     ## DAI whale holder can be viewed on etherscan
     ## https://etherscan.io/token/0x6b175474e89094c44da98b954eedeac495271d0f#balances
@@ -18,8 +18,14 @@ class BlockchainAddresses:
     ## Do not use the prefunded accounts in a production environment
     ## These are very well known keys and anything sent to them will likely be stolen
     ANVIL_TEST_ACCOUNT_1: str = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+    ANVIL_TEST_ACCOUNT_2: str = "0x70997970C51812dc3A010C7d01b50e0d17dc79C8"
+    ANVIL_TEST_ACCOUNT_1_SECRET: str = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
+    ANVIL_TEST_ACCOUNT_2_SECRET: str = "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d"
 
     ANVIL_RPC_URL: str = "http://127.0.0.1:8545"
+    ORDERS_URL: str = "http://localhost:8080/api/v1/orders"
+
+    HEADERS = {'accept': 'application/json'}
 
     ERC20_ABI = json.loads(
         """[
