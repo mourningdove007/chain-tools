@@ -78,7 +78,7 @@ class TestIntegration:
 
     def test_successful_wrapped_ETH(self, anvil_instance):
 
-        time.sleep(2)  ## requires fixture to start
+        time.sleep(3)  ## requires fixture to start
 
         amount = random.randint(2, 4000)
 
@@ -96,7 +96,7 @@ class TestIntegration:
 
     def test_fund_dai(self, anvil_instance):
 
-        time.sleep(2)  ## requires fixture to start
+        time.sleep(3)  ## requires fixture to start
 
         amount = random.randint(2, 4000)
 
