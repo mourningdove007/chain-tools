@@ -18,7 +18,7 @@ class PopulateChain:
 
     def __init__(self, rpc_url: str):
         self.w3: Web3 = PopulateChain.setup_web3_connection(rpc_url)
-        print_info(f"Web3 connection established successfully to {rpc_url}.")
+        print_green(f"Web3 connection established successfully to {rpc_url}.")
 
     @staticmethod
     def setup_web3_connection(rpc_url: str) -> Web3:
@@ -98,7 +98,7 @@ class PopulateChain:
         final_balance_dai = w3.from_wei(final_balance_wei, "ether")
 
         if int(final_balance_wei) == int(target_wei):
-            print_info(f"Final DAI Balance: {final_balance_dai:.2f} DAI.")
+            print_green(f"Final DAI Balance: {final_balance_dai:.2f} DAI.")
             print_green("Test account successfully funded.")
         else:
             raise Exception(
@@ -137,7 +137,7 @@ class PopulateChain:
 
             if final_eth == (initial_eth + amount_eth):
                 print_green(f"Funding successful. Anvil RPC call completed.")
-                print_info(f"Whale's New ETH Balance: {final_eth:.4f} ETH.")
+                print_green(f"Whale's New ETH Balance: {final_eth:.4f} ETH.")
             else:
                 print_yellow(f"Balance change failed or RPC method was not available.")
 
@@ -158,8 +158,8 @@ class PopulateChain:
             chain_id = w3.eth.chain_id
 
             print_green("Connection successful!")
-            print_info(f"   Chain ID: {chain_id}")
-            print_info(f"   Latest Block: {w3.eth.block_number}")
+            print_green(f"   Chain ID: {chain_id}")
+            print_green(f"   Latest Block: {w3.eth.block_number}")
 
             self.wrap_ether(100, test_account_address)
             self.fund_whale_for_testing(101)
