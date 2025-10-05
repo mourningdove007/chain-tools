@@ -33,6 +33,8 @@ def generate_order_request(private_key: str = ba.ANVIL_TEST_ACCOUNT_2_SECRET):
         ]
     }
 
+    ## App Data Known Hashes
+    ## https://github.com/cowprotocol/services/blob/main/database/sql/V060__app_data_overrides.sql
 
     ORDER_DATA = {
         "sellToken": ba.WETH_CONTRACT,
