@@ -6,3 +6,21 @@ populate/create_test_balances.py
 .vscode
 .pytest_cache
 python/allowance/allowance.py
+
+## Foundry Files
+
+foundry/lib/forge-std
+# Compiler files
+foundry/cache/
+foundry/out/
+
+# Ignores development broadcast logs
+foundry/!/broadcast
+foundry//broadcast/*/31337/
+foundry//broadcast/**/dry-run/
+
+# Docs
+foundry/docs/
+
+# Dotenv file
+foundry/.env
