@@ -4,6 +4,7 @@ GREEN = '\033[92m'
 YELLOW = '\033[93m'
 LIGHT_BLUE = '\033[94m'
 LIGHT_PINK = '\033[95m'
+LIGHT_CYAN = '\033[96m'
 
 BOLD = '\033[1m'
 
@@ -19,7 +20,7 @@ def print_yellow(message: str):
     print(f"{YELLOW}{message}{RESET}")
 
 def print_info(message: str):
-    print(f"{LIGHT_PINK}{message}{RESET}")
+    print(f"{LIGHT_CYAN}{message}{RESET}")
 
 def print_whale(message: str):
     print(f"{LIGHT_BLUE}{message}{RESET}")

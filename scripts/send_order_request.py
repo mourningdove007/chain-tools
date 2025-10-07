@@ -1,7 +1,7 @@
 import json
 import requests
 from constants.blockchain import BlockchainAddresses as ba
-from scripts.order_requests import generate_order_request
+from scripts.cow_order_requests import generate_order_request
 
 
 request_body = generate_order_request(ba.ANVIL_TEST_ACCOUNT_2_SECRET)

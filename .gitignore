@@ -1,8 +1,7 @@
+scripts/cow_order_requests.py
 venv
 .env
 .DS_Store
 populate/create_test_balances.py
 .vscode
 .pytest_cache
-
-scripts/order_requests.py
