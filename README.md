@@ -16,19 +16,3 @@ This repository contains a suite of Python scripts designed to facilitate the ra
 
 By leveraging the powerful combination of the web3.py library and eth-account, these tools allow researchers and developers to create complex, repeatable blockchain scenarios necessary for in-depth security analysis and development testing.
 
-## Prerequisites
-
-Create a Python 3 environment and install the required libraries.
-
-```
-python3 -m venv venv
-source venv/bin/activate
-
-pip install -r requirements.txt
-```
-
-Run the tests with `pytest`:
-
-```
-pytest
-```

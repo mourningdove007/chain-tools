@@ -1,3 +1,24 @@
+# Prerequisites
+
+This directory contains our tools written in Python using the Web3 library.
+
+Create a Python 3 environment and install the required libraries.
+
+```
+cd python
+
+python3 -m venv venv
+source venv/bin/activate
+
+pip install -r requirements.txt
+```
+
+Run the tests with `pytest`:
+
+```
+pytest
+```
+
 # Populate Test Accounts
 
 Here we provide instruction to populate a local Anvil chain with wrapped ethereum (WETH), COW Tokens, and USDT.
