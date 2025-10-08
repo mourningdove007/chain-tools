@@ -14,6 +14,10 @@ foundry/lib/forge-std
 foundry/cache/
 foundry/out/
 
+# audits
+
+foundry/test/cow
+
 # Ignores development broadcast logs
 foundry/!/broadcast
 foundry//broadcast/*/31337/

@@ -3,6 +3,7 @@ pragma solidity ^0.8.19;
 
 contract MockERC20 {
     mapping(address => mapping(address => uint256)) private _allowances;
+    mapping(address => uint256) public balances;
 
     string public name;
     string public symbol;
@@ -28,20 +29,35 @@ contract MockERC20 {
     function totalSupply() public pure returns (uint256) {
         return 0;
     }
-    function balanceOf(address account) public pure returns (uint256) {
-        return 0;
-    }
-    function transfer(
-        address recipient,
-        uint256 amount
-    ) public pure returns (bool) {
+
+    function transfer()
+        public
+        pure
+        returns (
+            // address recipient,
+            // uint256 amount
+            bool
+        )
+    {
         return false;
     }
-    function transferFrom(
-        address sender,
-        address recipient,
-        uint256 amount
-    ) public pure returns (bool) {
+    function transferFrom()
+        public
+        pure
+        returns (
+            // address sender,
+            // address recipient,
+            // uint256 amount
+            bool
+        )
+    {
         return false;
+    }
+    function deposit() external payable {
+        balances[msg.sender] += msg.value;
+    }
+
+    function balanceOf(address account) external view returns (uint256) {
+        return balances[account];
     }
 }

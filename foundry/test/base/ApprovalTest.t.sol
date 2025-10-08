@@ -2,7 +2,7 @@
 pragma solidity ^0.8.19;
 
 import "forge-std/Test.sol";
-import {MockERC20} from "../src/MockToken.sol";
+import {MockERC20} from "../../src/MockToken.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract ApprovalTest is Test {
