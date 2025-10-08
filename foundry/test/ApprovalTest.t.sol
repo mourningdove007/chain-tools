@@ -3,13 +3,18 @@ pragma solidity ^0.8.19;
 
 import "forge-std/Test.sol";
 import {MockERC20} from "../src/MockToken.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract ApprovalTest is Test {
+
+    using Strings for uint256;
+    
     address internal constant VAULT_RELAYER_ADDRESS =
         0xC92E8bdf79f0507f65a392b0ab4667716BFE0110;
     uint256 internal constant UNLIMITED_ALLOWANCE = type(uint256).max;
     address internal userWallet;
 
+    
     MockERC20 internal weth;
     MockERC20 internal usdc;
 
@@ -58,11 +63,27 @@ contract ApprovalTest is Test {
             VAULT_RELAYER_ADDRESS
         );
 
+        string memory currentString = currentAllowance.toString();
+        string memory limitedString = limitedAmount.toString();
+
+        string memory successMessage = string(abi.encodePacked(
+            "\n",
+            "\n",
+            "Current Allowance: ",
+            currentString,
+            "\n",
+            "Limited Amount: ",
+            limitedString,
+            "\n",
+            "Limited USDC allowance verified: PASSED" 
+        ));
+    
+
         assertEq(
             currentAllowance,
             limitedAmount,
-            "Limited allowance should be set correctly for USDC"
+            successMessage
         );
-        console.log("Limited USDC allowance verified: PASSED");
+        console.log(successMessage);
     }
 }
