@@ -4,6 +4,7 @@ pragma solidity ^0.8.19;
 import "forge-std/Test.sol";
 import "forge-std/console.sol";
 import {IERC20} from "forge-std/interfaces/IERC20.sol";
+import {PublicValues} from "../../src/PublicValues.sol";
 
 
 interface IWETH is IERC20 {
@@ -11,7 +12,7 @@ interface IWETH is IERC20 {
     function withdraw(uint256 wad) external;
 }
 
-contract WETHWrapperFuzz is Test {
+contract WETHWrapperFuzz is Test, PublicValues {
     IWETH internal weth;
     address internal user;
 
@@ -19,9 +20,7 @@ contract WETHWrapperFuzz is Test {
 
         vm.createSelectFork("wss://mainnet.gateway.tenderly.co");
 
-        // WETH smart contract can be found on etherscan
-        // https://etherscan.io/token/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
-        weth = IWETH(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
+        weth = IWETH(PublicValues.WETH_TOKEN_ADDRESS);
 
         user = makeAddr("AuditorUser");
 

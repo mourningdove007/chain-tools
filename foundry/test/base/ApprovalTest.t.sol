@@ -1,21 +1,16 @@
-// SPDX-License-Identifier: MIT 
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
 import "forge-std/Test.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import {IERC20} from "forge-std/interfaces/IERC20.sol";
+import {PublicValues} from "../../src/PublicValues.sol";
 
-
-contract ApprovalTest is Test {
-
+contract ApprovalTest is Test, PublicValues {
     using Strings for uint256;
-    
-    address internal constant VAULT_RELAYER_ADDRESS =
-        0xC92E8bdf79f0507f65a392b0ab4667716BFE0110;
     uint256 internal constant UNLIMITED_ALLOWANCE = type(uint256).max;
     address internal userWallet;
 
-    
     IERC20 internal weth;
     IERC20 internal dai;
 
@@ -24,13 +19,9 @@ contract ApprovalTest is Test {
 
         userWallet = makeAddr("user-wallet");
 
-        // WETH smart contract can be found on etherscan
-        // https://etherscan.io/token/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
-        weth = IERC20(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
+        weth = IERC20(PublicValues.WETH_TOKEN_ADDRESS);
 
-        // The DAI token contract address is publically available
-        // https://etherscan.io/token/0x6b175474e89094c44da98b954eedeac495271d0f
-        dai = IERC20(0x6B175474E89094C44Da98b954EedeAC495271d0F);
+        dai = IERC20(PublicValues.DAI_TOKEN_ADDRESS);
 
         console.log("User Wallet:", userWallet);
         console.log("Vault Relayer:", VAULT_RELAYER_ADDRESS);
@@ -74,24 +65,21 @@ contract ApprovalTest is Test {
         string memory currentString = currentAllowance.toString();
         string memory limitedString = limitedAmount.toString();
 
-        string memory successMessage = string(abi.encodePacked(
-            "\n",
-            "\n",
-            "Current Allowance: ",
-            currentString,
-            "\n",
-            "Limited Amount: ",
-            limitedString,
-            "\n",
-            "Limited DAI allowance verified: PASSED" 
-        ));
-    
-
-        assertEq(
-            currentAllowance,
-            limitedAmount,
-            successMessage
+        string memory successMessage = string(
+            abi.encodePacked(
+                "\n",
+                "\n",
+                "Current Allowance: ",
+                currentString,
+                "\n",
+                "Limited Amount: ",
+                limitedString,
+                "\n",
+                "Limited DAI allowance verified: PASSED"
+            )
         );
+
+        assertEq(currentAllowance, limitedAmount, successMessage);
         console.log(successMessage);
     }
 }

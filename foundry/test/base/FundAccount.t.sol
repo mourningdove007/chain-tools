@@ -4,13 +4,10 @@ pragma solidity ^0.8.19;
 import "forge-std/Test.sol";
 import "forge-std/console.sol";
 import {IERC20} from "forge-std/interfaces/IERC20.sol";
+import {PublicValues} from "../../src/PublicValues.sol";
 
-contract FundAccount is Test {
+contract FundAccount is Test, PublicValues{
 
-    // The DAI token contract address is publically available
-    // https://etherscan.io/token/0x6b175474e89094c44da98b954eedeac495271d0f
-    address internal constant DAI_TOKEN_ADDRESS = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
-    
     uint256 internal constant TRANSFER_AMOUNT = 10000e18; 
     
     IERC20 internal dai_token;
@@ -21,15 +18,15 @@ contract FundAccount is Test {
 
     function setUp() public {
 
-        dai_token = IERC20(DAI_TOKEN_ADDRESS);
-        vm.label(DAI_TOKEN_ADDRESS, "DAI Token");
+        dai_token = IERC20(PublicValues.DAI_TOKEN_ADDRESS);
+        vm.label(PublicValues.DAI_TOKEN_ADDRESS, "DAI Token");
 
         receiveWallet = makeAddr("recevie-wallet");
         senderWallet = makeAddr("sender-wallet");
 
         vm.createSelectFork("wss://mainnet.gateway.tenderly.co");
 
-        deal(address(DAI_TOKEN_ADDRESS), senderWallet, 10000e18);
+        deal(address(PublicValues.DAI_TOKEN_ADDRESS), senderWallet, 10000e18);
 
     }
 
