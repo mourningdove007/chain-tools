@@ -3,18 +3,28 @@ pragma solidity ^0.8.19;
 
 import "forge-std/Test.sol";
 import "forge-std/console.sol";
-import {MockERC20} from "../../src/MockToken.sol";
+import {IERC20} from "forge-std/interfaces/IERC20.sol";
+
+
+interface IWETH is IERC20 {
+    function deposit() external payable;
+    function withdraw(uint256 wad) external;
+}
 
 contract WETHWrapperFuzz is Test {
-    MockERC20 internal weth;
+    IWETH internal weth;
     address internal user;
 
     function setUp() public {
-        weth = new MockERC20("Wrapped Ether", "WETH");
+
+        vm.createSelectFork("wss://mainnet.gateway.tenderly.co");
+
+        // WETH smart contract can be found on etherscan
+        // https://etherscan.io/token/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+        weth = IWETH(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
 
         user = makeAddr("AuditorUser");
 
-        vm.deal(user, type(uint256).max);
     }
 
     function testFuzz_WETHBalanceIsCorrectAfterDeposit(

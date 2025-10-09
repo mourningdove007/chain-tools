@@ -2,8 +2,9 @@
 pragma solidity ^0.8.19;
 
 import "forge-std/Test.sol";
-import {MockERC20} from "../../src/MockToken.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
+import {IERC20} from "forge-std/interfaces/IERC20.sol";
+
 
 contract ApprovalTest is Test {
 
@@ -15,14 +16,21 @@ contract ApprovalTest is Test {
     address internal userWallet;
 
     
-    MockERC20 internal weth;
-    MockERC20 internal usdc;
+    IERC20 internal weth;
+    IERC20 internal dai;
 
     function setUp() public {
+        vm.createSelectFork("wss://mainnet.gateway.tenderly.co");
+
         userWallet = makeAddr("user-wallet");
 
-        weth = new MockERC20("Wrapped Ether", "WETH");
-        usdc = new MockERC20("USD Coin", "USDC");
+        // WETH smart contract can be found on etherscan
+        // https://etherscan.io/token/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+        weth = IERC20(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
+
+        // The DAI token contract address is publically available
+        // https://etherscan.io/token/0x6b175474e89094c44da98b954eedeac495271d0f
+        dai = IERC20(0x6B175474E89094C44Da98b954EedeAC495271d0F);
 
         console.log("User Wallet:", userWallet);
         console.log("Vault Relayer:", VAULT_RELAYER_ADDRESS);
@@ -54,11 +62,11 @@ contract ApprovalTest is Test {
 
         vm.startPrank(userWallet);
 
-        usdc.approve(VAULT_RELAYER_ADDRESS, limitedAmount);
+        dai.approve(VAULT_RELAYER_ADDRESS, limitedAmount);
 
         vm.stopPrank();
 
-        uint256 currentAllowance = usdc.allowance(
+        uint256 currentAllowance = dai.allowance(
             userWallet,
             VAULT_RELAYER_ADDRESS
         );
@@ -75,7 +83,7 @@ contract ApprovalTest is Test {
             "Limited Amount: ",
             limitedString,
             "\n",
-            "Limited USDC allowance verified: PASSED" 
+            "Limited DAI allowance verified: PASSED" 
         ));
     
 
