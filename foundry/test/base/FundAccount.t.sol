@@ -34,7 +34,7 @@ contract FundAccount is Test {
     }
 
 
-    function testSuccessfulDeal() public {
+    function testSuccessfulDeal() public view {
         assertEq(dai_token.balanceOf(senderWallet), 10000e18);   
     }
 
