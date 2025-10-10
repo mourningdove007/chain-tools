@@ -16,7 +16,7 @@ foundry/out/
 
 # audits
 
-foundry/test/cow
+foundry/test/cow/CowSettlement.t.sol
 
 # Ignores development broadcast logs
 foundry/!/broadcast
