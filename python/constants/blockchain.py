@@ -3,6 +3,10 @@ import json
 
 class BlockchainAddresses:
 
+    ## The CoW token contract address can be found on etherscan
+    ## https://etherscan.io/token/0xdef1ca1fb7fbcdc777520aa7f396b4e015f497ab#code
+    COW_TOKEN: str = "0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB"
+
     ## DAI smart contract can be found on etherscan
     ## https://etherscan.io/token/0x6b175474e89094c44da98b954eedeac495271d0f
     DAI_CONTRACT: str = "0x6b175474e89094c44da98b954eedeac495271d0f"
