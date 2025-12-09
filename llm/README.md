@@ -1,6 +1,6 @@
 # Ollama Client
 
-This client allows us to provide context to a running instance of an Ollama LLM.
+This client allows us to provide context to a running instance of an [Ollama](https://ollama.com/) LLM. The following process describes how our locally running LLM file analyzer is used.
 
 Install the virtual environment.
 
@@ -22,12 +22,4 @@ Analyzes the contents of a file and saves a summary to `rust_code_analysis.txt`.
 
 ```
 python file_analyzer.py my_directory
-```
-
-### Analyze Test Output of Rust Example
-
-This mode starts a continuous chat session using the default model (llama3 or the one specified in the script).
-
-```
-cargo test myTest.rs -- --nocapture 2>&1 | python ollama_chat.py
 ```
