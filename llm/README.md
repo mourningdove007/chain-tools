@@ -16,6 +16,13 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+### File Analyzer
+
+Analyzes the contents of a file and saves a summary to `rust_code_analysis.txt`.
+
+```
+python file_analyzer.py my_directory
+```
 
 ### Analyze Test Output of Rust Example
 

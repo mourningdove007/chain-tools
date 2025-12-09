@@ -28,3 +28,5 @@ foundry/docs/
 
 # Dotenv file
 foundry/.env
+
+llm/venv
